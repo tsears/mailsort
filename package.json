@@ -4,7 +4,7 @@
   "description": "quick and dirty imap mail sort based on recipient name",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon index.js"
   },
@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "eslint-plugin-promise": "^4.2.1",
     "imap-simple": "^5.0.0"
   },
   "devDependencies": {
@@ -22,6 +21,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-max-len-2": "0.0.5",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.4"
   }
