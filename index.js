@@ -1,7 +1,16 @@
 const path = require('path')
 require('dotenv').config({ path: path.resolve(process.cwd(), 'config.env') })
 
-const boxMapping = {}
+// JSON document should contain key value pairs in the form of:
+// "emailuser": "IMAP Destination Mailbox"
+// e.g.
+// {
+//   "github": "INBOX/GitHub"
+// }
+//
+// where the key corresponds to the email address "github@mydomain.net"
+
+const boxMapping = require('./mappings.json')
 
 const imaps = require('imap-simple')
 
@@ -27,11 +36,7 @@ async function run () {
     markSeen: false,
   }
 
-  console.log('Fetching Mailboxes....')
-  const mailboxes = await connection.getBoxes()
-  console.log('mailboxes', Object.keys(mailboxes))
-
-  console.log('Fetching Results...')
+  console.log('Fetching Unsorted Messages...')
   const results = await connection.search(searchCriteria, fetchOptions)
   console.log(`Got ${results.length} results`)
 
@@ -45,14 +50,19 @@ async function run () {
         return
       }
 
-      const whichEmail = to.find(to => to.includes('@tsears.net'))
+      const whichEmail = to.find(
+        to => to.toLowerCase().includes(`@${process.env.EMAIL_DOMAIN}`)
+      )
 
       if (!whichEmail) {
         return
       }
 
-      const emailAddress = whichEmail.match(/([a-zA-Z0-9._-]+@tsears\.net)/gi)[0].toLowerCase()
-      const bucket = emailAddress.replace('@tsears.net', '')
+      const emailAddress =
+        whichEmail.match(/([a-zA-Z0-9._-]+@tsears\.net)/gi)[0].toLowerCase()
+      const bucket = emailAddress.replace(`@${process.env.EMAIL_DOMAIN}`, '')
+
+      console.log('bucket', bucket)
 
       if (boxMapping[bucket]) {
         console.log(`Moving message ${result.attributes.uid} ${emailAddress} to ${boxMapping[bucket]}`)
