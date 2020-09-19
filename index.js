@@ -62,14 +62,14 @@ async function run () {
         whichEmail.match(/([a-zA-Z0-9._-]+@tsears\.net)/gi)[0].toLowerCase()
       const bucket = emailAddress.replace(`@${process.env.EMAIL_DOMAIN}`, '')
 
-      console.log('bucket', bucket)
-
       if (boxMapping[bucket]) {
         console.log(`Moving message ${result.attributes.uid} ${emailAddress} to ${boxMapping[bucket]}`)
 
         promises.push(
           connection.moveMessage(`${result.attributes.uid}`, boxMapping[bucket])
         )
+      } else {
+        console.warn(`*** Unknown recipient ${bucket} ***`)
       }
     })
 
