@@ -15,6 +15,7 @@
     "imap-simple": "^5.0.0"
   },
   "devDependencies": {
+    "colors": "1.4.0",
     "eslint": "^7.6.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-disable": "^2.0.1",
@@ -23,6 +24,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "progress": "2.0.3"
   }
 }
